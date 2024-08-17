@@ -1,6 +1,6 @@
 declare var toastr: Toastr;
 
-document.getElementById('loginForm')?.addEventListener('submit', function (event: Event) {
+document.getElementById('loginForm')?.addEventListener('submit', async function (event: Event) {
     event.preventDefault();
     const regex = /^[A-Za-z0-9]+$/;
 
@@ -15,21 +15,29 @@ document.getElementById('loginForm')?.addEventListener('submit', function (event
         return;
     }
 
-    fetch("http://localhost:8080/api/auth/authenticate", {
+    console.log("Fetching");
+
+    fetch("/auth/login", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-type": "application/json",
+            "Connection": "keep-alive",
+            "Accept": "/"
         },
         body: JSON.stringify({
             "username": username,
             "password": password
         })
     }).then(response => {
-        const status = response.status;
+        const status: number = response.status;
+        console.log("Status: " + status);
         if (status === 200) {
             window.location.href = "/";
-        } else if (status == 403){
-            toastr.error("Incorrect login or password");
+        } else if (status === 409) {
+            toastr.error("Username is taken");
+        } else {
+            toastr.info("Status: " + status);
         }
     })
+    console.log("Past");
 });
