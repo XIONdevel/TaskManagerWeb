@@ -1,0 +1,9 @@
+create/edit:
+name:
+    length 5 - 30
+    no tabs, no new lines (\t \n)
+
+description: 0 - 300
+    length 0 - 300
+
+

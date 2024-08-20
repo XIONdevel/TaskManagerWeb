@@ -8,17 +8,19 @@
     <link rel="stylesheet" href="./css/authentication.css">
 </head>
 <body>
-<h1>Login</h1>
-<form id="loginForm">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required><br><br>
+<div id="mainContainer">
+    <h1>Login</h1>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
 
-    <button type="submit">Login</button>
-</form>
-
+        <button type="submit">Login</button>
+    </form>
+    <p>Do not have an account?<br/><a href="/register">Register here</a></p>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 <script src="/js/login.js"></script>

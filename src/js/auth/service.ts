@@ -4,7 +4,7 @@ export async function isAuthenticated(req: Request) {
     const token = req.cookies.Authorization as string;
     let status;
 
-    if (token.startsWith("Bearer ")) {
+    if (token != null && token.startsWith("Bearer ")) {
         await fetch("http://localhost:8080/api/auth/check", {
             method: "POST",
             headers: {

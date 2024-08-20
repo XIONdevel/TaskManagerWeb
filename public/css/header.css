@@ -1,0 +1,27 @@
+.headerButtons {
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.headerButtons:hover {
+    cursor: pointer;
+}
+
+#headerDiv {
+    align-content: center;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#header {
+    background: grey;
+    width: 400px;
+    height: 60px;
+    border-radius: 0 0 100px 100px;
+
+}

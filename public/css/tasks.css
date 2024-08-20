@@ -1,0 +1,120 @@
+#outerTaskContainer {
+    background: #dfdfdf;
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 50px;
+    height: 656px;
+}
+
+#taskContainer {
+    background: #dfdfdf;
+    width: 900px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    padding: 0px 20px 20px 20px;
+    height: 556px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#taskContainer::-webkit-scrollbar {
+    display: none;
+}
+
+#taskContainerHolder {
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+}
+
+
+
+.task {
+    background: whitesmoke;
+    width: 800px;
+    border: solid lightblue 5px;
+    border-radius: 25px;
+    min-height: 150px;
+    margin: 20px 10px 0 10px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    display: grid;
+    grid-template-areas: 'name' 'desc';
+    grid-template-columns: 100%;
+    grid-template-rows: 30% 70%;
+}
+
+.infoBlock {
+    position: relative;
+    text-align: right;
+    align-content: flex-end;
+    margin: 3px;
+}
+
+.task p {
+    margin: 10px;
+}
+
+.task:hover {
+    cursor: pointer;
+}
+
+.editTaskButton {
+    justify-self: right;
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    margin: 4px;
+    border-radius: 7px;
+    grid-row-start: 1;
+    grid-column-start: 1;
+}
+
+.editTaskButton:hover {
+    cursor: pointer;
+}
+
+.taskName {
+    font-size: 24px;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    text-align: center;
+}
+
+.taskDescription {
+    font-size: 18px;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 1;
+}
+
+.scrollButtons {
+    height: 50px;
+    width: 1000px;
+    border: none;
+    background: #d3d3d3;
+}
+
+#scrollUpButton {
+    border-radius: 50px 50px 0 0;
+}
+
+#scrollDownButton {
+    border-radius: 0 0 50px 50px;
+}
+
+.scrollButtons:hover {
+    background: #EFEFEF;
+}
+

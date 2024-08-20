@@ -6,21 +6,44 @@
     <title>Your task manager</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/tasks.css">
 </head>
 <body>
-    <div id="mainContainer">
-        <div id="headerDiv">
-            <img id="logoImg" src="/img/logo.png" alt="Logo"/>
-        </div>
-
-        <div id="taskContainer">
-
-        </div>
-
-        <div id="sidePanelDiv">
-
+<div id="mainContainer">
+    <div id="headerDiv">
+        <div id="header">
+            <button id="add" class="headerButtons"><img src="img/file-earmark-plus.svg" alt="Q"></button>
+            <button id="delete" class="headerButtons"><img src="img/trash3.svg" alt="Q"></button>
+            <button id="import" class="headerButtons"><img src="img/file-earmark-arrow-down.svg" alt="Q"></button>
+            <button id="export" class="headerButtons"><img src="img/file-earmark-arrow-up.svg" alt="Q"></button>
+            <button id="exit" class="headerButtons"><img src="img/door-open.svg" alt="Q"></button>
         </div>
     </div>
+
+    <div id="taskContainerHolder">
+        <div id="outerTaskContainer">
+            <button id="scrollUpButton" class="scrollButtons">
+                <img src="img/arrow-up-circle.svg" alt="UP">
+            </button>
+            <div id="taskContainer">
+                <div  class="task">
+                    <p class="taskName">Name cvetok loh</p>
+                    <p class="taskDescription">
+                        Very interesting description about planting bananas on your roof with some random text and useless description for testing purpose.
+                    </p>
+                    <button class="editTaskButton">
+                        <img src="img/three-dots-vertical.svg" alt="ED">
+                    </button>
+                </div>
+            </div>
+            <button id="scrollDownButton" class="scrollButtons">
+                <img src="img/arrow-down-circle.svg" alt="DOWN">
+            </button>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 <script type="module" src="/js/main.js"></script>
