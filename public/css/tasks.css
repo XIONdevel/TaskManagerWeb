@@ -49,6 +49,8 @@
     grid-template-areas: 'name' 'desc';
     grid-template-columns: 100%;
     grid-template-rows: 30% 70%;
+
+    overflow-wrap: break-word;
 }
 
 .infoBlock {

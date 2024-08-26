@@ -14,3 +14,21 @@ body, html {
 button {
     cursor: pointer;
 }
+
+#logoutContainer {
+    width: 220px;
+    height: 120px;
+    border-radius: 10px;
+    background: #dfdfdf;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.logoutButtons {
+    border: none;
+    border-radius: 10px;
+    width: 200px;
+    height: 40px;
+    margin: 10px;
+}

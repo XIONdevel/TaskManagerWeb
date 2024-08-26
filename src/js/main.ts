@@ -10,6 +10,61 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 function initHeaderButtons() {
     setupAddButton();
+    setupLogoutButton();
+}
+
+function setupLogoutButton() {
+    const button = document.getElementById("exit") as HTMLButtonElement;
+    button.addEventListener('click', function () {
+        const container = document.getElementById("logoutContainer");
+        if (container == null) {
+            createLogoutMenu();
+        } else {
+            container.remove();
+        }
+    });
+}
+
+function createLogoutMenu() {
+    const container = document.createElement("div");
+    container.id = "logoutContainer";
+
+    const logoutHere = document.createElement("button");
+    logoutHere.id = "logoutHere";
+    logoutHere.className = "logoutButtons";
+    logoutHere.textContent = "Logout this device";
+    logoutHere.addEventListener("click", async function () {
+        await logout("/auth/logout-here");
+        window.location.href = "/login";
+    });
+
+    const logoutAll = document.createElement("button");
+    logoutAll.id = "logoutAll";
+    logoutAll.className = "logoutButtons";
+    logoutAll.textContent = "Logout everywhere";
+    logoutAll.addEventListener("click", async function () {
+        await logout("/auth/logout-all");
+        window.location.href = "/login";
+    });
+
+    container.appendChild(logoutHere);
+    container.appendChild(logoutAll);
+
+    const button = document.getElementById("exit") as HTMLButtonElement;
+    const rect = button.getBoundingClientRect();
+
+    container.style.left = `${rect.left}px`;
+    container.style.top = `${rect.bottom + 5}px`;
+
+    const main = document.getElementById("mainContainer") as HTMLDivElement;
+    main.appendChild(container);
+}
+
+async function logout(link: string) {
+    await fetch(link, {
+        method: "POST",
+        credentials: "include"
+    })
 }
 
 function setupPopupWindow() {
@@ -72,7 +127,7 @@ function createBasicForm() {
     container.innerHTML =
         "<div id='formHolder'><div id='inputBlock'>" +
         "<label class='inputLabel' for='nameInput'>Name</label><input id='nameInput' minlength='5' maxlength='30'>" +
-        "<label class='inputLabel' for='descriptionInput'>Description</label><textarea id='descriptionInput' maxlength='300'></textarea>" +
+        "<label class='inputLabel' for='descriptionInput'>Description</label><textarea id='descriptionInput' maxlength='250'></textarea>" +
         "</div></div>";
 
     const form = document.getElementById("inputBlock") as HTMLDivElement;
@@ -211,6 +266,8 @@ async function saveBasicLogic() {
         addBasicTask(data.id, data.name, data.description);
     })
 }
+
+
 
 
 interface TaskDTO {

@@ -28,9 +28,10 @@ export function makeLogoutRequest(req: Request, res: Response, link: string): vo
         })
         res.cookie("Authorization", "", {
             httpOnly: true,
-            maxAge: 1
+            maxAge: 1,
+            sameSite: "strict"
         })
-        res.status(200).redirect("/login");
+        res.redirect("/login");
     }
 }
 
@@ -55,7 +56,7 @@ export function makeAuthRequest(req: Request, res: Response, link: string): void
             res.cookie("Authorization", token, {
                 httpOnly: true,
                 maxAge: 2419200000, //28d
-                sameSite: "none"
+                sameSite: "strict"
                 //, secure: true //TODO: uncomment for HTTPS
             });
             res.status(200).send();
@@ -68,7 +69,8 @@ export function makeAuthRequest(req: Request, res: Response, link: string): void
 export function handleUnauthorized(res: Response) {
     res.cookie("Authorization", "", {
         httpOnly: true,
-        maxAge: 1
+        maxAge: 1,
+        sameSite: "strict"
     }).redirect("/login")
     throw Error("Unauthorized");
 }
