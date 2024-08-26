@@ -8,8 +8,17 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/tasks.css">
+    <link rel="stylesheet" href="/css/menus.css">
 </head>
 <body>
+
+<div id="popupWindow">
+    <div id="backgroundDiv"></div>
+    <div id="popupContainer">
+
+    </div>
+</div>
+
 <div id="mainContainer">
     <div id="headerDiv">
         <div id="header">
@@ -26,17 +35,9 @@
             <button id="scrollUpButton" class="scrollButtons">
                 <img src="img/arrow-up-circle.svg" alt="UP">
             </button>
-            <div id="taskContainer">
-                <div  class="task">
-                    <p class="taskName">Name cvetok loh</p>
-                    <p class="taskDescription">
-                        Very interesting description about planting bananas on your roof with some random text and useless description for testing purpose.
-                    </p>
-                    <button class="editTaskButton">
-                        <img src="img/three-dots-vertical.svg" alt="ED">
-                    </button>
-                </div>
-            </div>
+
+            <div id="taskContainer"></div>
+
             <button id="scrollDownButton" class="scrollButtons">
                 <img src="img/arrow-down-circle.svg" alt="DOWN">
             </button>

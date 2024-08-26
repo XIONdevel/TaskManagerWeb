@@ -1,0 +1,94 @@
+#popupWindow {
+    display: none;
+    position: absolute;
+    background: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#backgroundDiv {
+    width: 100%;
+    position: fixed;
+    height: 100%;
+    background: black;
+    opacity: 0.2;
+}
+
+#popupContainer, #createSelection, #formHolder {
+    width: max-content;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#popupContainer {
+    background: none;
+    position: absolute;
+}
+
+#createSelection {
+    padding: 15px;
+    background: white;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+#formHolder {
+    flex-direction: column;
+    background: white;
+    width: 500px;
+    height: 450px;
+    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 10px;
+    justify-content: flex-start;
+    text-align: center;
+}
+
+#inputBlock {
+    width: 450px;
+    height: 500px;
+}
+
+#nameInput, #descriptionInput {
+    padding: 10px;
+    font-size: 18px;
+    width: 400px;
+    height: 20px;
+    border-radius: 10px;
+    border: solid 3px lightgrey;
+    margin-bottom: 10px;
+}
+
+#descriptionInput {
+    resize: none;
+    overflow: hidden;
+    height: 200px;
+}
+
+.inputLabel {
+    margin: 10px 0 0 10px;
+    font-size: 18px;
+}
+
+#saveButton, #cancelButton {
+    border: solid lightgrey 3px;
+    border-radius: 10px;
+    margin: 12px;
+    width: 200px;
+    height: 40px;
+    background: white;
+    font-size: 18px;
+}
+
+.createButtons {
+    font-size: 24px;
+    width: 200px;
+    height: 60px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+}

@@ -64,3 +64,11 @@ export function makeAuthRequest(req: Request, res: Response, link: string): void
         }
     })
 }
+
+export function handleUnauthorized(res: Response) {
+    res.cookie("Authorization", "", {
+        httpOnly: true,
+        maxAge: 1
+    }).redirect("/login")
+    throw Error("Unauthorized");
+}

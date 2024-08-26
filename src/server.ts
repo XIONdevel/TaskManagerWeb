@@ -1,16 +1,21 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import {configureToastr} from "./js/notification";
-import authRouter from "./js/auth/router";
 import cookieParser from "cookie-parser";
+
+import {configureToastr} from "./js/notification";
 import {isAuthenticated} from "./js/auth/service";
+
+import authRouter from "./js/auth/router";
+import basicRouter from "./js/tasks/basic/router";
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 
 configureToastr();
+
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(cookieParser());
@@ -43,6 +48,7 @@ app.get('/register', async (req, res) => {
 })
 
 app.use('/auth', authRouter);
+app.use('/task/basic/', basicRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
