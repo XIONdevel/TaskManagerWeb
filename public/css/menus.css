@@ -92,3 +92,38 @@
     border: none;
     border-radius: 5px;
 }
+
+.draggableContainer {
+    position: absolute;
+    background: lightblue;
+    border-radius: 10px;
+    min-height: 100px;
+    min-width: 100px;
+}
+
+#deleteMenuContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.deleteMenuButtons {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.draggableHeader {
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    height: 30px;
+    background: deepskyblue;
+}
+
+.selected {
+    background: #62d8ff;
+}
+
+
+

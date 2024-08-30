@@ -1,5 +1,7 @@
 declare var toastr: Toastr;
 
+//this file already looks like shit :|
+//TODO: refactor
 document.addEventListener("DOMContentLoaded", async function () {
     initScrollButtons();
     setupPopupWindow();
@@ -11,6 +13,213 @@ document.addEventListener("DOMContentLoaded", async function () {
 function initHeaderButtons() {
     setupAddButton();
     setupLogoutButton();
+    setupMultipleDeleteButton();
+}
+
+function setupMultipleDeleteButton() {
+    const deleteButton = document.getElementById("delete") as HTMLButtonElement;
+    deleteButton.addEventListener('click', function () {
+        const menu = document.getElementById("deleteMenuContainer");
+        if (menu == null) {
+            addTaskSelectListeners();
+            createDeleteMenu();
+        }
+    })
+}
+
+function createDeleteMenu() {
+    const main = document.getElementById("mainContainer") as HTMLDivElement;
+    const container = document.createElement("div");
+    container.id = "deleteMenuContainer";
+
+    container.appendChild(createDeleteButton());
+    container.appendChild(createCancelButton());
+    container.appendChild(createSelectAllButton());
+    container.appendChild(createUnselectAllButton());
+
+    const draggable = createDraggableContainer("deleteDragContainer");
+    draggable.appendChild(container);
+    draggable.style.top = "200px";
+    draggable.style.left = "1000px";
+    main.appendChild(draggable);
+    dragElement(draggable);
+
+    function createDeleteButton(): HTMLButtonElement {
+        const deleteButton = document.createElement("button");
+        deleteButton.id = "deleteButton";
+        deleteButton.className = "deleteMenuButtons";
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener('click', function () {
+            const selectedTasks = document.querySelectorAll('.selected');
+            let ids: Array<string> = [];
+            selectedTasks.forEach(task => {
+                ids.push(task.id.substring(5));
+            })
+            deleteTasks(ids);
+        });
+        return deleteButton;
+    }
+
+    function createCancelButton() {
+        const cancel = document.createElement("button");
+        cancel.id = "cancelDeletionButton";
+        cancel.className = "deleteMenuButtons";
+        cancel.textContent = "Cancel";
+        cancel.addEventListener("click", function () {
+            removeHTMLElement("deleteDragContainer");
+            unselectAllTasks();
+            removeTaskSelectListeners();
+            addTaskOpenListeners();
+        });
+        return cancel;
+    }
+
+    function createSelectAllButton() {
+        const selectAll = document.createElement("button");
+        selectAll.textContent = "All";
+        selectAll.className = "deleteMenuButtons"
+        selectAll.addEventListener('click', selectAllTasks);
+        return selectAll;
+    }
+
+    function createUnselectAllButton() {
+        const unselectAll = document.createElement("button");
+        unselectAll.textContent = "None";
+        unselectAll.className = "deleteMenuButtons"
+        unselectAll.addEventListener('click', unselectAllTasks);
+        return unselectAll;
+    }
+}
+
+function selectAllTasks() {
+    const tasks = document.querySelectorAll('.task');
+    tasks.forEach(task => {
+        if (!task.classList.contains("selected")) {
+            task.classList.add('selected');
+        }
+    })
+}
+
+function unselectAllTasks() {
+    const tasks = document.querySelectorAll('.task');
+    tasks.forEach(task => {
+        if (task.classList.contains("selected")) {
+            task.classList.remove('selected');
+        }
+    })
+}
+
+//Call dragElement() after appending it
+function createDraggableContainer(containerId: string): HTMLDivElement {
+    const draggableContainer = document.createElement("div");
+    draggableContainer.id = containerId;
+    draggableContainer.className = "draggableContainer";
+
+    const containerHeader = document.createElement("div");
+    containerHeader.id = containerId + "Header";
+    containerHeader.className = "draggableHeader";
+
+    draggableContainer.appendChild(containerHeader);
+    return draggableContainer;
+}
+
+//if it works, don`t touch it
+function dragElement(element: HTMLDivElement) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    if (document.getElementById(element.id + "Header")) {
+        const container = document.getElementById(element.id + "Header") as HTMLDivElement;
+        container.onmousedown = dragMouseDown;
+    } else {
+        element.onmousedown = dragMouseDown;
+    }
+
+    //@ts-ignore
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+    }
+
+    //@ts-ignore
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
+
+function removeHTMLElement(elId: string) {
+    const el = document.getElementById(elId) as HTMLElement;
+    el.remove();
+}
+
+function addTaskSelectListeners() {
+    const tasks = document.querySelectorAll('.task');
+    tasks.forEach(task => {
+        // @ts-ignore
+        task.addEventListener('click', addToggleSelected);
+    })
+}
+
+function removeTaskSelectListeners() {
+    const tasks = document.querySelectorAll('.task');
+    tasks.forEach(task => {
+        // @ts-ignore
+        task.removeEventListener('click', addToggleSelected);
+    })
+}
+
+function addToggleSelected(event: MouseEvent) {
+    const target = event.currentTarget as HTMLElement;
+    target.classList.toggle('selected');
+}
+
+function addTaskOpenListeners() {
+    const tasks = document.querySelectorAll('.task');
+    tasks.forEach(task => {
+        task.addEventListener('click', function () {
+            //TODO: add open task function
+        })
+    })
+}
+
+async function deleteTasks(ids: Array<string>) {
+    await fetch("/task/basic/multiple-delete", {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(ids)
+    }).then(async response => {
+        const status = response.status;
+        if (status === 200) {
+            loadTasks();
+            return;
+        } else {
+            toastr.info("Status" + status)
+        }
+    }).catch(error => {
+        toastr.error("Error: " + error.getMessage());
+        toastr.error("Error: " + error);
+    });
 }
 
 function setupLogoutButton() {
@@ -168,6 +377,8 @@ function cleanPopup() {
 }
 
 function loadTasks() {
+    const container = document.getElementById("taskContainer") as HTMLDivElement;
+    container.innerHTML = "";
     fetch("/task/basic/getAll", {
         method: "GET",
         credentials: "include"
@@ -266,8 +477,6 @@ async function saveBasicLogic() {
         addBasicTask(data.id, data.name, data.description);
     })
 }
-
-
 
 
 interface TaskDTO {

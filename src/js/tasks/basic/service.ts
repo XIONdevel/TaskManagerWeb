@@ -1,6 +1,29 @@
 import {Request, Response} from "express";
 import {handleUnauthorized} from "../../auth/service";
 
+export async function multipleDelete(req: Request, res: Response) {
+    const token = req.cookies.Authorization;
+    fetch("http://localhost:8080/api/task/basic/delete", {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": token
+        },
+        body: JSON.stringify(req.body)
+    }).then(response => {
+        const status = response.status;
+        if (status === 200) {
+            res.status(200).send();
+        } else if (status === 401) {
+            handleUnauthorized(res);
+        } else {
+            res.status(status).send("Error");
+        }
+    });
+}
+
+
 export async function create(req: Request, res: Response) {
     const token = req.cookies.Authorization;
     const name = req.body.name;
@@ -18,10 +41,7 @@ export async function create(req: Request, res: Response) {
             "description": description
         })
     }).then(async response => {
-        console.log("processing");
         const status = response.status;
-        console.log("Status: " + status);
-
         if (status === 201) {
             return response.json();
         } else if (status === 400) {

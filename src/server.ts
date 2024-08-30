@@ -22,6 +22,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/favicon.ico'));
+})
 
 app.get('/', async (req, res) => {
     if (await isAuthenticated(req)) {

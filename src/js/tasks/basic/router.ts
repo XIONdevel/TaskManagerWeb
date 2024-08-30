@@ -12,7 +12,9 @@ router.get("/getAll", async (req: Request, res: Response) => {
     await service.getAll(req, res);
 })
 
-
+router.delete("/multiple-delete", async (req: Request, res: Response)=> {
+    await service.multipleDelete(req, res);
+})
 
 
 
